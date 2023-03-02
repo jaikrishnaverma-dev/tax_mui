@@ -8,7 +8,7 @@ const useQuery = () => {
                   val= item.value
                 }
               });
-            return parseInt(val)
+            return parseFloat(val)
     }
   return getKeyValue
 }

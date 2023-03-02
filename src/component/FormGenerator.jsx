@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import React from "react";
 
 const FormGenerator = ({ forms,setForms,currentForm }) => {
-
+// generate form dynamically with validation
   return (
     <>
       {forms[currentForm].map((x, i) => {
@@ -15,7 +15,7 @@ const FormGenerator = ({ forms,setForms,currentForm }) => {
             error={forms[currentForm][i].error}
             onChange={(e) => {
               forms[currentForm][i]['value'] = e.target.value;
-              forms[currentForm][i]['error'] = (x.type === 'number'&&x.max)?!(parseInt(e.target.value)>=0 && parseInt(e.target.value)<=x.max):false
+              forms[currentForm][i]['error'] = (x.type === 'number'&&x.max)?!(parseFloat(e.target.value)>=0 && parseFloat(e.target.value)<=x.max):false
                 setForms({ ...forms });
             }}
           />

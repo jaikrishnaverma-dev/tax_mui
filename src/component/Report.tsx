@@ -22,7 +22,7 @@ export default function Report({ forms }: { forms: formsType }) {
 
   // calculating Tax using recursion 
   const calculateTax: calculateTaxType = (amount,taxSlab,rule,tax = 0,index = 0) => {
-    if (taxSlab.length === index || amount <= 0) return Math.round(tax);
+    if (taxSlab.length === index || amount <= 0) return tax;
     const [calAmt, calcTax] = rule(amount,taxSlab[index].min,taxSlab[index].max,taxSlab[index].percent);
     return calculateTax(calAmt, taxSlab, rule, tax + calcTax, index + 1);
   };
@@ -57,13 +57,13 @@ export default function Report({ forms }: { forms: formsType }) {
         ? data["Total_Income"] - data["Total_Deduction"]
         : 0;
         // calculate old regime tax
-      data["OLD_Total_Payble_Tax"] = calculateTax(
+      data["Total_Payble_Tax(Old Regime)"] = calculateTax(
           data["Taxable_Amount"],
           order.oldSlab,
           order.rule
         );
         // calculate new regime tax
-    data["NEW_Total_Payble_Tax"] = calculateTax(
+    data["Total_Payble_Tax(New Regime)"] = calculateTax(
       data["Taxable_Amount"],
       order.newSlab,
       order.rule
@@ -97,7 +97,7 @@ export default function Report({ forms }: { forms: formsType }) {
         </Typography>
         {Object.entries(generateReport()).map(([key, value]: any) => (
             <Typography key={key+value} color="text.primary" sx={{ }}>
-              {key.replaceAll('_',' ')} : ₹ {value}
+              {key.replaceAll('_',' ')} : ₹ {value.toFixed(2)}
             </Typography>
         ))}
       </CardContent>
