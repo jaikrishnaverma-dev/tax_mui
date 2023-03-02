@@ -1,12 +1,14 @@
+
 const useQuery = () => {
-    const getKeyValue=(dataHub:any,key:any)=>{
+  // this function can return the value of rquired key with help of another key
+    const getKeyValue=(arr:any,key:any)=>{
         let val=''
-        dataHub&&dataHub.forEach((item:any, i:number) => {
-                if ( item.name == key) {
+        arr&&arr.forEach((item:any, i:number) => {
+                if ( item.name === key) {
                   val= item.value
                 }
               });
-            return val
+            return parseInt(val)
     }
   return getKeyValue
 }

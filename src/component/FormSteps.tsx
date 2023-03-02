@@ -5,31 +5,25 @@ import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {
-  Alert,
-  Card,
-  FormControlLabel,
-  Snackbar,
-  Stack,
-  Switch,
-} from "@mui/material";
+import {Alert,Card,FormControlLabel,Snackbar,Stack,Switch,} from "@mui/material";
 import FormGenerator from "./FormGenerator";
-import { initialForms } from "./formsFormate";
+import { initialForms } from "./controllerData";
 import Report from "./Report";
-
+// hold label of steps
 const steps = ["Income_Details", "Deduction"];
 
 export default function FormSteps() {
+  // store state of forms ui & error and there value and other props of textField
   const [forms, setForms] = React.useState<any>(initialForms);
+  // current step counter
   const [activeStep, setActiveStep] = React.useState(0);
+  // error toast switch
   const [open, setOpen] = React.useState(false);
-  const [completed, setCompleted] = React.useState<{
-    [k: number]: boolean;
-  }>({});
-  const totalSteps = () => {
-    return steps.length;
-  };
-
+  // completed verifier
+  const [completed, setCompleted] = React.useState<{[k: number]: boolean}>({});
+// total steps return
+  const totalSteps = () => {return steps.length;};
+// handle closeing of toast
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -37,21 +31,21 @@ export default function FormSteps() {
     if (reason === "clickaway") {
       return;
     }
-
     setOpen(false);
   };
+  // check completed steps
   const completedSteps = () => {
     return Object.keys(completed).length;
   };
-
+// check this is last step or not
   const isLastStep = () => {
     return activeStep === totalSteps() - 1;
   };
-
+// all complete verifier
   const allStepsCompleted = () => {
     return completedSteps() === totalSteps();
   };
-
+// form next handler
   const handleNext = () => {
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
@@ -61,23 +55,26 @@ export default function FormSteps() {
         : activeStep + 1;
     setActiveStep(newActiveStep);
   };
-
+// form back handler
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
-
+//form step handler
   const handleStep = (step: number) => () => {
     setActiveStep(step);
   };
+  
+  // toast opener
   const handleClick = () => {
     setOpen(true);
   };
+
+  // verify to current form complted or not
   const handleComplete = () => {
     const newCompleted = completed;
     let arr = forms[steps[activeStep]].filter((item: any) => {
-      return item.error || (item.required && item.value == "");
+      return item.error || (item.required && item.value === "");
     });
-
     if (!(arr.length > 0)) {
       newCompleted[activeStep] = true;
       setCompleted(newCompleted);
@@ -87,7 +84,7 @@ export default function FormSteps() {
     }
   };
 
-  const handleReset = () => {
+  const handleGoBack = () => {
     setActiveStep(0);
     setCompleted({});
   };
@@ -99,7 +96,7 @@ export default function FormSteps() {
         {steps.map((label, index) => (
           <Step key={label} completed={completed[index]}>
             <StepButton color="inherit" onClick={handleStep(index)}>
-              {label}
+              {label} (Annually)
             </StepButton>
           </Step>
         ))}
@@ -108,12 +105,12 @@ export default function FormSteps() {
         {allStepsCompleted() ? (
           <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}>
-              All steps completed - you&apos;re finished
+              All steps completed - Here is your report:
             </Typography>
             <Report forms={forms} />
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleReset}>Reset</Button>
+              <Button onClick={handleGoBack}>Go Back</Button>
             </Box>
           </React.Fragment>
         ) : (
@@ -128,7 +125,7 @@ export default function FormSteps() {
                 currentForm={steps[activeStep]}
               />
             </Card>
-            {steps[activeStep] == "Income_Details" && (
+            {steps[activeStep] === "Income_Details" && (
               <FormControlLabel
                 sx={{ marginLeft: "15px" }}
                 value="Do You live in metro city?"
@@ -180,7 +177,7 @@ export default function FormSteps() {
           onClose={handleClose}
         >
           <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-            Please fill all required Details!
+            Please fill valid details in all required inputs!
           </Alert>
         </Snackbar>
       </Stack>

@@ -5,7 +5,7 @@ import FormSteps from './FormSteps';
 const Home = () => {
   return (
 <>
-<Container fixed sx={{paddingTop:'50px'}}>
+<Container fixed sx={{paddingTop:'25px'}}>
     <FormSteps/>
 </Container>
 </>

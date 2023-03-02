@@ -32,7 +32,7 @@ export const initialForms: formsType = {
     },
     {
       id: "hra",
-      label: "HRA",
+      label: "House Rent Allowance",
       variant: "outlined",
       type: "text",
       name: "hra",
@@ -42,19 +42,17 @@ export const initialForms: formsType = {
     },
     {
       id: "lta",
-      label: "LTA",
+      label: "Leave Travel Allowance",
       variant: "outlined",
       type: "number",
       name: "lta",
-      max: 2000,
-      helperText: "value should less than 2000",
       required: false,
       value: "",
       error: false,
     },
     {
       id: "any other allowance",
-      label: "AOL",
+      label: "Any Other Allowance",
       variant: "outlined",
       type: "number",
       name: "AOL",
@@ -66,7 +64,7 @@ export const initialForms: formsType = {
   Deduction: [
     {
       id: "80C",
-      label: "80C",
+      label: "80 C",
       variant: "outlined",
       type: "number",
       name: "80C",
@@ -78,7 +76,7 @@ export const initialForms: formsType = {
     },
     {
       id: "80D",
-      label: "80D",
+      label: "80 D",
       variant: "outlined",
       type: "number",
       name: "80D",
@@ -90,7 +88,7 @@ export const initialForms: formsType = {
     },
     {
       id: "80TTA",
-      label: "80TTA",
+      label: "80 TTA",
       variant: "outlined",
       type: "number",
       name: "80TTA",
@@ -102,7 +100,7 @@ export const initialForms: formsType = {
     },
     {
       id: "rent_paid",
-      label: "RENT PAID",
+      label: "Rent Paid",
       variant: "outlined",
       type: "number",
       name: "RENT_PAID",
@@ -112,7 +110,7 @@ export const initialForms: formsType = {
     },
     {
       id: "standard_deduction",
-      label: "STANDARD DEDUCTION",
+      label: "Standard Deduction",
       variant: "outlined",
       type: "number",
       name: "STANDARD_DEDUCTION",
@@ -122,4 +120,83 @@ export const initialForms: formsType = {
     },
   ],
   metrocity: false,
+};
+
+// store old & new slabs and rule function required to calculate tax
+export const order: any = {
+  newSlab: [
+    {
+      label: "upto 250000",
+      min: 0,
+      max: 250000,
+      percent: 0,
+    },
+    {
+      label: "250001 to 500000",
+      min: 250000,
+      max: 500000,
+      percent: 5,
+    },
+    {
+      label: "500001 to 750000",
+      min: 500000,
+      max: 750000,
+      percent: 10,
+    },
+    {
+      label: "750001 to 1000000",
+      min: 750000,
+      max: 1000000,
+      percent: 15,
+    },
+    {
+      label: "1000001 to 1250000",
+      min: 1000000,
+      max: 1250000,
+      percent: 20,
+    },
+    {
+      label: "1250001 to 1500000",
+      min: 1250000,
+      max: 1500000,
+      percent: 25,
+    },
+    {
+      label: "1500001 to above",
+      min: 1500000,
+      max: Number.MAX_VALUE,
+      percent: 30,
+    },
+  ],
+  oldSlab: [
+    {
+      label: "upto 250000",
+      min: 0,
+      max: 250000,
+      percent: 0,
+    },
+    {
+      label: "250001 to 500000",
+      min: 250000,
+      max: 500000,
+      percent: 5,
+    },
+    {
+      label: "500001 to 1000000",
+      min: 500000,
+      max: 1000000,
+      percent: 20,
+    },
+    {
+      label: "1000001 to above",
+      min: 1000000,
+      max: Number.MAX_VALUE,
+      percent: 30,
+    },
+  ],
+  rule: (amount: number, mn: number, mx: number, p: number) => {
+    let tx = amount > mx - mn ? mx - mn : amount;
+    tx = (tx * p) / 100;
+    return [amount > mx - mn ? amount - (mx - mn) : 0, tx];
+  },
 };
