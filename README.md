@@ -20,8 +20,8 @@ Tax-MUI is a React web application built using the Material-UI design system. It
 
 ## Installation and Setup
 
-1. Clone the repository: `git clone https://github.com/your-username/tax-mui.git`
-2. Navigate to the project directory: `cd tax-mui`
+1. Clone the repository: `git clone https://github.com/jaikrishnaverma-dev/tax_mui.git`
+2. Navigate to the project directory: `cd tax_mui`
 3. Install dependencies: `npm install`
 4. Start the development server: `npm start`
 5. Open your browser and navigate to `http://localhost:3000` to access the application.
@@ -39,12 +39,8 @@ Tax-MUI is a React web application built using the Material-UI design system. It
 
 ## Credits
 
-This project was created by [Your Name]. Special thanks to [Any contributors or resources you'd like to mention].
+This project was created by jai krishna verma. Special thanks to [Any contributors or resources you'd like to mention].
 
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
----
-
-Feel free to customize the README file further with additional sections, screenshots, or any other relevant information about your project!
